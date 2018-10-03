@@ -1,0 +1,11 @@
+.container {
+    &.ep-post-container {
+        max-width: 740px;
+    }
+}
+
+.trix-preview {
+    img {
+        cursor: zoom-in;
+    }
+}
