@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import "./_index.scss";
+import Trix from "trix";
 
 class TrixEditor extends React.Component {
     constructor(props) {
@@ -73,7 +75,9 @@ class TrixEditor extends React.Component {
         const text = e.target.innerText;
 
         if (props.onChange) {
-            props.onChange(e.target.innerHTML, text);
+            const document = e.target.editor.getDocument()
+            const str = JSON.stringify(document)
+            props.onChange(e.target.innerHTML, str);
         }
 
         const range = this.editor.getSelectedRange();
@@ -157,7 +161,7 @@ class TrixEditor extends React.Component {
         }
 
         return (
-            <div id="trix-editor-top-level" ref={(d) => this.d = d} style={{ "position": "relative" }}>
+            <div className="trix-editor-top-level" ref={(d) => this.d = d} style={{ "position": "relative" }}>
                 {React.createElement("trix-editor", attributes)}
                 <input
                     type="hidden"
@@ -178,6 +182,10 @@ TrixEditor.propTypes = {
     uploadData: PropTypes.object,
     onEditorReady: PropTypes.func,
     onChange: PropTypes.func
+}
+
+TrixEditor.defaultProps = {
+    value: "{}"
 }
 
 export default TrixEditor;

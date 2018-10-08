@@ -9,3 +9,50 @@
         cursor: zoom-in;
     }
 }
+
+.ep-comment-form, .ep-post-comment {
+    position: relative;
+    background: #faf8f7;
+    padding: 16px;
+    border-radius: 10px;
+    margin: 10px 0 16px 42px;
+
+    .trix-editor-top-level {
+        background: #fff;
+    }
+
+    .comment-avatar {
+        position: absolute;
+        top: 0.75em;
+        left: -42px;
+        width: 48px;
+        height: 48px;
+        background: #fff;
+        box-shadow: 0 0 0 1px #faf8f7, 0 0 0 5px #fff;
+        border-radius: 50%;
+        vertical-align: middle;
+    }
+
+    .ep-comment-header {
+        .comment-timestamp {
+            float: right;
+            font-size: 0.8em;
+            color: rgba(0, 0, 0, 0.6);
+        }
+    }
+
+    .comment-actions {
+        span:not(:first-child){
+            margin-left: 10px;
+        }
+
+        span {
+            font-size: 16px;
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        span:hover {
+            color: #000;
+        }
+    }
+}

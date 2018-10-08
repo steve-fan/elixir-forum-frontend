@@ -18,7 +18,6 @@ class App extends Component {
         this.handleContentChange = this.handleContentChange.bind(this);
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleSaveDraft = this.handleSaveDraft.bind(this);
     }
 
     render() {
@@ -35,20 +34,14 @@ class App extends Component {
                     </div>
                     <div className="mb2">
                         <TrixEditor
-                            placeholder="editor's placeholder"
-                            value="initial content <strong>for the editor</strong>"
+                            placeholder="..."
+                            value=""
                             uploadURL="/api/image.upload"
                             uploadData={{}}
                             onChange={this.handleContentChange}
                         />
                     </div>
                     <div>
-                        <Button
-                            className="mr2"
-                            onClick={this.handleSaveDraft}
-                        >
-                            Save daft
-                        </Button>
                         <Button
                             intent="success"
                             onClick={this.handleSubmit}
@@ -66,7 +59,7 @@ class App extends Component {
     }
 
     handleContentChange(html, rawContent) {
-        this.setState({ content: html })
+        this.setState({ content: rawContent })
     }
 
     handleSubmit(e) {
@@ -77,14 +70,9 @@ class App extends Component {
             }
         };
 
-        createPost(params).then(response => {
-            return response.json()
-        }).then(json => {
+        createPost(params).then(json => {
             console.log(json);
-        })
-    }
-
-    handleSaveDraft(e) {
+        });
     }
 }
 

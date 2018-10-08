@@ -1,0 +1,31 @@
+.ep-post-container {
+    trix-toolbar {
+        .trix-button-group {
+            margin-bottom: 0;
+            border: none;
+            font-size: 16px;
+        }
+
+        .trix-button {
+            border-bottom: none;
+        }
+
+        .trix-button:not(:first-child) {
+            border-left: none;
+        }
+
+        .trix-button-group:not(first-child) {
+            margin-left: 0px;
+        }
+    }
+
+    trix-editor {
+        border: none;
+        border-top: 1px solid #ededed;
+    }
+
+    .trix-editor-top-level {
+        border: 1px solid #ddd;
+        border-radius: 3px;
+    }
+}

@@ -10,10 +10,8 @@ export const fetchHotPosts = (params) => {
     return httpPostJson("/post.list", params);
 }
 
-export const createPost = ({title, content}) => {
-    return httpPostJson("/post.create", {
-        post: {title, content}
-    });
+export const createPost = (params) => {
+    return httpPostJson("/post.create", params);
 }
 
 export const updatePost = ({id, title, content}) => {
@@ -21,4 +19,8 @@ export const updatePost = ({id, title, content}) => {
         id,
         post: { title, content }
     });
+}
+
+export const createPostComment = (params) => {
+    return httpPostJson("/post.create_comment", params);
 }
