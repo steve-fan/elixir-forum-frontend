@@ -185,7 +185,7 @@ TrixEditor.propTypes = {
 }
 
 TrixEditor.defaultProps = {
-    value: "{}"
+    value: ""
 }
 
 export default TrixEditor;

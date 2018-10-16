@@ -10,9 +10,11 @@ import reducers from './reducers';
 import registerServiceWorker from './registerServiceWorker';
 import { Home } from './components';
 
+import PostNewContainer from "./containers/post/new"
 import PostShowContainer from "./containers/post/show"
 import PostEditContainer from "./containers/post/edit"
 import HotPostContainer from "./containers/post/hot"
+import LoginContainer from "./containers/login"
 
 import "./styles/index.css"
 
@@ -32,12 +34,15 @@ render(
             <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/hot" component={HotPostContainer} />
+                <Route path="/p/new" component={PostNewContainer} />
+                <Route path="/p/:postId" component={PostShowContainer} />
                 <Route path="/p/:postId/edit" component={PostEditContainer} />
                 <Route path="/p/:postId" component={PostShowContainer} />
+                <Route path="/login" component={LoginContainer} />
             </Switch>
         </ConnectedRouter>
     </Provider>,
     document.getElementById('root')
 );
 
-registerServiceWorker();
+// registerServiceWorker();
