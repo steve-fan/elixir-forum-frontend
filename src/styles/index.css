@@ -16,3 +16,7 @@ body {
 trix-editor:focus {
     outline: none;
 }
+
+.ant-tag {
+    border-radius: 2px;
+}

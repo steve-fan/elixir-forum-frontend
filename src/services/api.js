@@ -24,3 +24,7 @@ export const updatePost = ({id, title, content}) => {
 export const createPostComment = (params) => {
     return httpPostJson("/post.create_comment", params);
 }
+
+export const fetchLatestTopics = (params) => {
+    return httpPostJson("/topics/latest", params)
+}
