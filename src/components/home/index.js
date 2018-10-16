@@ -6,9 +6,12 @@ import Tag from "antd/lib/tag";
 import Menu, { Item as MenuItem } from "antd/lib/menu";
 import {Select} from "@blueprintjs/select";
 import { Button as BPButton } from "@blueprintjs/core"
+import { Popover } from "@blueprintjs/core";
+import { Menu as BPMenu } from "@blueprintjs/core";
+import { MenuItem as BPMenuItem } from "@blueprintjs/core";
 import { topicItemRenderer, TopicListHeader } from "../../components/topic"
 import List from "../../components/list";
-import { fetchLatestTopics } from "../../services/api";
+import { fetchLatestTopics, fetchCurrentUser } from "../../services/api";
 import Moment from "moment";
 import "./style.scss"
 
@@ -19,7 +22,8 @@ class Home extends Component {
         this.state = {
             latestTopics: {
                 data: []
-            }
+            },
+            currentUser: null
         }
     }
 
@@ -28,11 +32,14 @@ class Home extends Component {
             this.setState({
                 latestTopics: json.data
             })
-        })
+        });
+        fetchCurrentUser().then(json => {
+            this.setState({currentUser: json.data})
+        });
     }
 
     render() {
-        const {latestTopics} = this.state;
+        const {latestTopics, currentUser} = this.state;
         console.log(this.state.latestTopics);
 
         return (
@@ -55,7 +62,7 @@ class Home extends Component {
                                         <Link to="/about">关于</Link>
                                     </MenuItem>
                                     <MenuItem className="menu-item-login">
-                                        <Link to="/login">登录</Link>
+                                        { currentUser ? <NavbarAvatar {...currentUser} /> : <Link to="/login">登录</Link>}
                                     </MenuItem>
                                 </Menu>
                             </Col>
@@ -104,6 +111,20 @@ const TopicHeader = () => (
         <Col span={2}>活跃度</Col>
     </Row>
 );
+
+const NavbarAvatar = (props) => {
+    const menu = (
+        <BPMenu>
+            <BPMenuItem icon="log-out" href="/auth/logout" text="登出" />
+        </BPMenu>
+    );
+
+    return (
+        <Popover content={menu}>
+            <img className="avatar" alt={props.name} src={props.avatar_url} />
+        </Popover>
+    );
+}
 
 
 export default Home;

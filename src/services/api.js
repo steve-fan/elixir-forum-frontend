@@ -1,5 +1,6 @@
 import {
-    httpPostJson
+    httpPostJson,
+    httpGet
 } from "./utils";
 
 export const fetchPost = (id) => {
@@ -26,5 +27,9 @@ export const createPostComment = (params) => {
 }
 
 export const fetchLatestTopics = (params) => {
-    return httpPostJson("/topics/latest", params)
+    return httpPostJson("/topics/latest", params);
+}
+
+export const fetchCurrentUser = (params) => {
+    return httpGet("/current_user");
 }
