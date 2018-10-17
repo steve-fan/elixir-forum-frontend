@@ -20,6 +20,7 @@ export const topicItemRenderer = (item) => {
                 <Tag color={item.category.background}>{item.category.name}</Tag>
             </Col>
             <Col span={4} className="topic-users">
+                <img alt={item.creator.name} src={item.creator.avatar_url} />
                 {item.post_users.map(u => <img key={u.id} alt={u.name} src={u.avatar_url} />)}
             </Col>
             <Col span={1} className="topic-posts-count">{item.posts_count}</Col>
