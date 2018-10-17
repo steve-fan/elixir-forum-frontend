@@ -7,8 +7,7 @@ import Spin from "antd/lib/spin";
 import Trix from "trix";
 import Tag from "antd/lib/tag";
 import Navigation from "../../components/nav";
-import PostCommentForm from "./comment_form";
-import { fetchTopicAction } from "../../actions/user-action-creator";
+import { fetchTopicAction, fetchCurrentUser } from "../../actions/user-action-creator";
 import "./style.scss";
 
 
@@ -20,6 +19,8 @@ class ShowTopicContainer extends Component {
     }
 
     componentDidMount() {
+        this.props.fetchCurrentUser()
+
         const topicId = this.props.match.params.topicId;
         this.props.fetchTopicAction(topicId);
     }
@@ -47,26 +48,26 @@ const TagLink = ({name}) => (
     </Link>
 )
 
-const Topic = ({title, content, category, tags, created_at}) => (
+const Topic = (topic) => (
     <div>
-        <div className="h2 pt3 pb1">{title}</div>
+        <div className="h2 pt3 pb1">{topic.title}</div>
         <div className="flex pb2">
-            <Link to={`/categories/${category.slug}`}>
-                <Tag color={category.background}>{category.name}</Tag>
+            <Link to={`/categories/${topic.category.slug}`}>
+                <Tag color={topic.category.background}>{topic.category.name}</Tag>
             </Link>
-            { tags.map(tag => <TagLink key={tag.id} {...tag} />) }
+            { topic.tags.map(tag => <TagLink key={tag.id} {...tag} />) }
         </div>
-        <PostComment content={content} created_at={created_at} />
+        <Post {...topic} />
     </div>
 );
 
-const PostComment = ({content, created_at}) => (
+const Post = ({content, created_at, creator}) => (
     <div className="ep-post-comment">
         <header className="ep-comment-header">
             <strong className="comment-name">Steve Fan</strong>
             <span className="comment-timestamp">{Moment(created_at).fromNow()}</span>
         </header>
-        <img className="avatar comment-avatar" src="/avatar.png" alt="avatar" />
+        <img className="avatar comment-avatar" src={creator.avatar_url} alt={creator.name} />
         <div className="trix-content trix-preview" dangerouslySetInnerHTML={{__html: content}} />
         <div className="comment-actions pt2">
             <span>0 👏</span>
@@ -76,23 +77,6 @@ const PostComment = ({content, created_at}) => (
     </div>
 );
 
-const PostWithComment = ({title, content, comments}) => {
-    const trixDocument = Trix.Document.fromJSON(JSON.parse(content))
-    const element = Trix.DocumentView.render(trixDocument);
-    return (
-        <div>
-            <div className="h1 pt2 pb2">{title}</div>
-            <div
-                className="trix-content trix-preview"
-                dangerouslySetInnerHTML={{__html: element.innerHTML}}
-            />
-            <div className="ep-post-comments">
-                { comments.map(c => <PostComment key={c.id} {...c} />)}
-            </div>
-        </div>
-    );
-}
-
 const mapStateToProps = (state) => {
     return {
         currentUser: state.user.currentUser,
@@ -100,4 +84,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {fetchTopicAction})(ShowTopicContainer);
+export default connect(mapStateToProps, {
+    fetchTopicAction,
+    fetchCurrentUser
+})(ShowTopicContainer);
