@@ -3,8 +3,32 @@ import api from "../services/api";
 import {
     FETCH_CURRENT_USER_SUCCESS,
     FETCH_ALL_CATEGORIES_SUCCESS,
-    FETCH_TOPIC_SUCCESS
+    FETCH_TOPIC_SUCCESS,
+    FETCH_LATEST_TOPICS_SUCCESS
 } from "../constants/action-types";
+
+// Topic
+
+export function fetchLatestTopicsActionSuccess(json) {
+    return {
+        type: FETCH_LATEST_TOPICS_SUCCESS,
+        topics: json.data
+    }
+}
+
+export function fetchLatestTopicsAction() {
+    return dispatch => {
+        return api.fetchLatestTopics().then(json => {
+            if (json.success) {
+                dispatch(fetchLatestTopicsActionSuccess(json));
+            }
+
+            return json;
+        });
+    }
+}
+
+// User
 
 export function fetchCurrentUserSuccess(currentUser) {
     return {

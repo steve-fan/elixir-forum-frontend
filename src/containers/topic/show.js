@@ -1,12 +1,16 @@
 import React, { Component } from "react";
+import Moment from "moment";
 import ReactDOMServer from "react-dom/server";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import Spin from "antd/lib/spin";
 import Trix from "trix";
+import Tag from "antd/lib/tag";
 import Navigation from "../../components/nav";
 import PostCommentForm from "./comment_form";
 import { fetchTopicAction } from "../../actions/user-action-creator";
 import "./style.scss";
+
 
 class ShowTopicContainer extends Component {
     constructor(props) {
@@ -28,7 +32,7 @@ class ShowTopicContainer extends Component {
                 <Navigation currentUser={currentUser} />
                 <div className="container ep-post-container">
                     { topic ?
-                      <Post {...topic} /> :
+                      <Topic {...topic} /> :
                       <Spin spinning={true}></Spin>
                     }
                 </div>
@@ -37,18 +41,30 @@ class ShowTopicContainer extends Component {
     }
 };
 
-const Post = ({title, content}) => (
+const TagLink = ({name}) => (
+    <Link to={`/tags/${name}`}>
+        <Tag>{name}</Tag>
+    </Link>
+)
+
+const Topic = ({title, content, category, tags, created_at}) => (
     <div>
-        <div className="h1 pt2 pb2">{title}</div>
-        <div className="trix-content trix-preview" dangerouslySetInnerHTML={{__html: content}} />
+        <div className="h2 pt3 pb1">{title}</div>
+        <div className="flex pb2">
+            <Link to={`/categories/${category.slug}`}>
+                <Tag color={category.background}>{category.name}</Tag>
+            </Link>
+            { tags.map(tag => <TagLink key={tag.id} {...tag} />) }
+        </div>
+        <PostComment content={content} created_at={created_at} />
     </div>
 );
 
-const PostComment = ({content}) => (
+const PostComment = ({content, created_at}) => (
     <div className="ep-post-comment">
         <header className="ep-comment-header">
             <strong className="comment-name">Steve Fan</strong>
-            <span className="comment-timestamp">12:10 pm</span>
+            <span className="comment-timestamp">{Moment(created_at).fromNow()}</span>
         </header>
         <img className="avatar comment-avatar" src="/avatar.png" alt="avatar" />
         <div className="trix-content trix-preview" dangerouslySetInnerHTML={{__html: content}} />

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
@@ -14,7 +15,10 @@ import { topicItemRenderer, TopicListHeader } from "../../components/topic"
 import TopicList from "../../components/topic/list";
 import Navigation from "../../components/nav";
 import SubNavigation from "../../components/nav/sub";
-import { fetchLatestTopics, fetchCurrentUser } from "../../services/api";
+import {
+    fetchLatestTopicsAction,
+    fetchCurrentUser
+} from "../../actions/user-action-creator";
 import Moment from "moment";
 import "./style.scss"
 
@@ -22,27 +26,16 @@ class Home extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            latestTopics: {
-                data: []
-            },
-            currentUser: null
-        }
+        this.state = {}
     }
 
     componentDidMount() {
-        fetchLatestTopics().then(json => {
-            this.setState({
-                latestTopics: json.data
-            })
-        });
-        fetchCurrentUser().then(json => {
-            this.setState({currentUser: json.data})
-        });
+        this.props.fetchLatestTopicsAction();
+        this.props.fetchCurrentUser();
     }
 
     render() {
-        const {latestTopics, currentUser} = this.state;
+        const {topics, currentUser} = this.props;
 
         return (
             <div className="home">
@@ -56,7 +49,7 @@ class Home extends Component {
                             </div>
                         </div>
                         <TopicList
-                            topics={latestTopics}
+                            topics={topics}
                             itemRenderer={topicItemRenderer}
                             header={<TopicListHeader/>}
                         />
@@ -67,5 +60,13 @@ class Home extends Component {
     }
 };
 
+const mapStateToProps = (state) => ({
+    currentUser: state.user.currentUser,
+    topics: state.topic.topics
+})
 
-export default Home;
+
+export default connect(mapStateToProps, {
+    fetchLatestTopicsAction,
+    fetchCurrentUser
+})(Home);

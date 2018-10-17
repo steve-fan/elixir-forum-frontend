@@ -7,15 +7,15 @@ import { ConnectedRouter, routerMiddleware, push } from 'react-router-redux';
 import { Router, Route, Switch } from 'react-router-dom';
 import logger from "redux-logger";
 import thunk from "redux-thunk";
+import "moment/locale/zh-cn";
 
 import registerServiceWorker from './registerServiceWorker';
 import reducers from "./reducers/index";
-import { Home } from './components';
+import Home from './containers/home';
 import NewTopicContainer from "./containers/topic/new"
 import ShowTopicContainer from "./containers/topic/show"
 import LoginContainer from "./containers/login"
 
-import { fetchCurrentUser } from "./actions/user-action-creator";
 
 import "./styles/index.css"
 
@@ -39,7 +39,5 @@ render(
     </Provider>,
     document.getElementById('root')
 );
-
-store.dispatch(fetchCurrentUser())
 
 registerServiceWorker();
