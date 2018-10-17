@@ -5,6 +5,10 @@
 .container {
     &.ep-post-container {
         max-width: 740px;
+
+        .tag-input {
+            flex: 1;
+        }
     }
 }
 

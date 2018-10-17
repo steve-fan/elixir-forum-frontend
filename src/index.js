@@ -1,31 +1,28 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, compose, applyMiddleware } from 'redux';
 import createHistory from 'history/createBrowserHistory';
-import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux';
+import { ConnectedRouter, routerMiddleware, push } from 'react-router-redux';
 import { Router, Route, Switch } from 'react-router-dom';
+import logger from "redux-logger";
+import thunk from "redux-thunk";
 
-import reducers from './reducers';
 import registerServiceWorker from './registerServiceWorker';
+import reducers from "./reducers/index";
 import { Home } from './components';
-
-import PostNewContainer from "./containers/post/new"
-import PostShowContainer from "./containers/post/show"
-import PostEditContainer from "./containers/post/edit"
-import HotPostContainer from "./containers/post/hot"
+import NewTopicContainer from "./containers/topic/new"
 import LoginContainer from "./containers/login"
+
+import { fetchCurrentUser } from "./actions/user-action-creator";
 
 import "./styles/index.css"
 
 const history = createHistory();
-const middleware = routerMiddleware(history);
+const middlewares = [routerMiddleware(history), logger, thunk]
 const store = createStore(
-    combineReducers({
-        ...reducers,
-        router: routerReducer
-    }),
-    applyMiddleware(middleware)
+    reducers,
+    compose(applyMiddleware(...middlewares))
 );
 
 render(
@@ -33,8 +30,7 @@ render(
         <ConnectedRouter history={history}>
             <Switch>
                 <Route exact path="/" component={Home} />
-                <Route path="/hot" component={HotPostContainer} />
-                <Route path="/t/new" component={PostNewContainer} />
+                <Route path="/t/new" component={NewTopicContainer} />
                 <Route path="/login" component={LoginContainer} />
             </Switch>
         </ConnectedRouter>
@@ -42,4 +38,6 @@ render(
     document.getElementById('root')
 );
 
-// registerServiceWorker();
+store.dispatch(fetchCurrentUser())
+
+registerServiceWorker();
