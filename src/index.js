@@ -34,10 +34,7 @@ render(
             <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/hot" component={HotPostContainer} />
-                <Route path="/p/new" component={PostNewContainer} />
-                <Route path="/p/:postId" component={PostShowContainer} />
-                <Route path="/p/:postId/edit" component={PostEditContainer} />
-                <Route path="/p/:postId" component={PostShowContainer} />
+                <Route path="/t/new" component={PostNewContainer} />
                 <Route path="/login" component={LoginContainer} />
             </Switch>
         </ConnectedRouter>

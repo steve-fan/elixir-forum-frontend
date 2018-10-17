@@ -4,7 +4,6 @@ import TrixEditor from "../../components/trix-editor";
 import { createPost, fetchHotPosts, logout } from "../../services/api";
 import "./_index.scss";
 
-
 class App extends Component {
     constructor(props) {
         super(props);
@@ -28,38 +27,35 @@ class App extends Component {
 
     render() {
         return (
-            <div className="container ep-post-container pt2">
-                <form action="">
-                    <div className="mb2">
-                        <input
-                            className="bp3-input bp3-fill bp3-large"
-                            type="text"
-                            placeholder="Title..."
-                            onChange={this.handleTitleChange}
-                        />
-                    </div>
-                    <div className="mb2">
-                        <TrixEditor
-                            placeholder="..."
-                            value=""
-                            uploadURL="/api/image.upload"
-                            uploadData={{}}
-                            onChange={this.handleContentChange}
-                        />
-                    </div>
-                    <div>
-                        <Button
-                            intent="success"
-                            onClick={this.handleSubmit}
-                        >
-                            Create post
-                        </Button>
-                    </div>
-                </form>
+            <div className="topic-new">
 
-                <div className="pt2">
-                    <form action="/auth/logout" method="POST">
-                        <Button type="submit" intent="danger">Logout</Button>
+                <div className="container ep-post-container pt2">
+                    <form action="">
+                        <div className="mb2">
+                            <input
+                                className="bp3-input bp3-fill bp3-large"
+                                type="text"
+                                placeholder="Title..."
+                                onChange={this.handleTitleChange}
+                            />
+                        </div>
+                        <div className="mb2">
+                            <TrixEditor
+                                placeholder="..."
+                                value=""
+                                uploadURL="/api/image.upload"
+                                uploadData={{}}
+                                onChange={this.handleContentChange}
+                            />
+                        </div>
+                        <div>
+                            <Button
+                                intent="success"
+                                onClick={this.handleSubmit}
+                            >
+                                创建话题
+                            </Button>
+                        </div>
                     </form>
                 </div>
             </div>
