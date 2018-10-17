@@ -4,6 +4,8 @@ import Moment from "moment";
 import Tag from "antd/lib/tag";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
+import { TagLink } from "../tag";
+import Post from "../post";
 
 export const topicItemRenderer = (item) => {
     return (
@@ -39,4 +41,17 @@ export const TopicListHeader = (props) => (
         <Col span={1}>浏览</Col>
         <Col span={2}>活跃度</Col>
     </Row>
+)
+
+export const Topic = (topic) => (
+    <div>
+        <div className="h2 pt3 pb1">{topic.title}</div>
+        <div className="flex pb2">
+            <Link to={`/categories/${topic.category.slug}`}>
+                <Tag color={topic.category.background}>{topic.category.name}</Tag>
+            </Link>
+            { topic.tags.map(tag => <TagLink key={tag.id} {...tag} />) }
+        </div>
+        <Post {...topic} />
+    </div>
 )
