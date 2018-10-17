@@ -1,64 +1,37 @@
 import React, { Component } from "react";
 import ReactDOMServer from "react-dom/server";
+import { connect } from "react-redux";
 import Spin from "antd/lib/spin";
 import Trix from "trix";
+import Navigation from "../../components/nav";
 import PostCommentForm from "./comment_form";
-import { createPostComment } from "../../services/api";
-import "./_index.scss";
+import { fetchTopicAction } from "../../actions/user-action-creator";
+import "./style.scss";
 
-class PostShowContainer extends Component {
+class ShowTopicContainer extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            loading: true,
-            post: null
-        }
-
-        this.handleSubmitComment = this.handleSubmitComment.bind(this);
+        this.state = {}
     }
 
     componentDidMount() {
-        fetch("/api/post.show", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ id: this.props.match.params.postId })
-        }).then(response => {
-            return response.json();
-        }).then(json => {
-            this.setState({ post: json.data, loading: false });
-        });
-    }
-
-    handleSubmitComment(value) {
-        // TODO use real user id
-        const params = {
-            comment: {
-                post_id: this.props.match.params.postId,
-                user_id: 1,
-                content: value
-            }
-        };
-
-        createPostComment(params).then(json => {
-            // TODO show comment in comment thread
-            console.log(json);
-        });
+        const topicId = this.props.match.params.topicId;
+        this.props.fetchTopicAction(topicId);
     }
 
     render() {
-        const { match } = this.props;
-        const { loading, post } = this.state;
+        const { topic, currentUser } = this.props;
 
         return (
-            <div className="container ep-post-container">
-                { loading ?
-                  <Spin spinning={loading}></Spin> :
-                  <PostWithComment {...post} />
-                }
-                { loading ? <Spin spinning={loading} /> : <PostCommentForm onSubmit={this.handleSubmitComment} />}
+            <div className="topic-show">
+                <Navigation currentUser={currentUser} />
+                <div className="container ep-post-container">
+                    { topic ?
+                      <Post {...topic} /> :
+                      <Spin spinning={true}></Spin>
+                    }
+                </div>
             </div>
         );
     }
@@ -104,4 +77,11 @@ const PostWithComment = ({title, content, comments}) => {
     );
 }
 
-export default PostShowContainer;
+const mapStateToProps = (state) => {
+    return {
+        currentUser: state.user.currentUser,
+        topic: state.topic.currentTopic
+    }
+}
+
+export default connect(mapStateToProps, {fetchTopicAction})(ShowTopicContainer);

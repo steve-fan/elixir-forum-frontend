@@ -12,6 +12,7 @@ import registerServiceWorker from './registerServiceWorker';
 import reducers from "./reducers/index";
 import { Home } from './components';
 import NewTopicContainer from "./containers/topic/new"
+import ShowTopicContainer from "./containers/topic/show"
 import LoginContainer from "./containers/login"
 
 import { fetchCurrentUser } from "./actions/user-action-creator";
@@ -31,6 +32,7 @@ render(
             <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/t/new" component={NewTopicContainer} />
+                <Route path="/t/:topicId" component={ShowTopicContainer} />
                 <Route path="/login" component={LoginContainer} />
             </Switch>
         </ConnectedRouter>

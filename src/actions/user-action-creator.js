@@ -2,7 +2,8 @@ import api from "../services/api";
 
 import {
     FETCH_CURRENT_USER_SUCCESS,
-    FETCH_ALL_CATEGORIES_SUCCESS
+    FETCH_ALL_CATEGORIES_SUCCESS,
+    FETCH_TOPIC_SUCCESS
 } from "../constants/action-types";
 
 export function fetchCurrentUserSuccess(currentUser) {
@@ -49,5 +50,24 @@ export function fetchAllCategories() {
 export function createTopic(params) {
     return dispatch => {
         return api.createTopic(params);
+    }
+}
+
+export function fetchTopicActionSuccess(topic) {
+    return {
+        type: FETCH_TOPIC_SUCCESS,
+        topic
+    }
+}
+
+
+export function fetchTopicAction(id) {
+    return dispatch => {
+        return api.fetchTopic(id).then(json => {
+            if (json.success) {
+                dispatch(fetchTopicActionSuccess(json.data));
+            }
+            return json;
+        })
     }
 }

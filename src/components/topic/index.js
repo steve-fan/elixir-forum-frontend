@@ -10,7 +10,7 @@ export const topicItemRenderer = (item) => {
         <Row key={item.id} className="topic-item flex items-center">
             <Col span={12}>
                 <div className="topic-title">
-                    <Link to={`/p/${item.id}`}>{item.title}</Link>
+                    <Link to={`/t/${item.id}`}>{item.title}</Link>
                 </div>
                 <div className="topic-tags">
                     {item.tags.map(t => <Tag key={t.id}>{t.name}</Tag>) }

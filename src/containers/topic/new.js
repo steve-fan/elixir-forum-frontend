@@ -93,7 +93,7 @@ class NewTopicContainer extends Component {
     }
 
     handleContentChange(html, rawContent) {
-        this.setState({ content: rawContent })
+        this.setState({ content: html })
     }
 
     handleSubmit() {
@@ -107,7 +107,7 @@ class NewTopicContainer extends Component {
         }
         this.props.createTopic(params).then(json => {
             if (json.success) {
-                // navigate to /t/:tid
+                this.props.history.push(`/t/${json.data.id}`)
             }
         })
     }
