@@ -4,10 +4,11 @@ import {
     FETCH_CURRENT_USER_SUCCESS,
     FETCH_ALL_CATEGORIES_SUCCESS,
     FETCH_TOPIC_SUCCESS,
-    FETCH_LATEST_TOPICS_SUCCESS
+    FETCH_LATEST_TOPICS_SUCCESS,
+    CREATE_TOPIC_POST_SUCCESS
 } from "../constants/action-types";
 
-// Topic
+// Topic actions
 
 export function fetchLatestTopicsActionSuccess(json) {
     return {
@@ -27,49 +28,6 @@ export function fetchLatestTopicsAction() {
         });
     }
 }
-
-// User
-
-export function fetchCurrentUserSuccess(currentUser) {
-    return {
-        type: FETCH_CURRENT_USER_SUCCESS,
-        currentUser
-    }
-}
-
-export function fetchCurrentUser() {
-    return dispatch => {
-        return api.fetchCurrentUser().then(json => {
-            if (json.success) {
-                dispatch(fetchCurrentUserSuccess(json.data))
-            }
-            return json
-        })
-    }
-}
-
-// Category
-
-export function fetchAllCategoriesSuccess(categories) {
-    return {
-        type: FETCH_ALL_CATEGORIES_SUCCESS,
-        categories
-    }
-}
-
-export function fetchAllCategories() {
-    return dispatch => {
-        return api.fetchAllCategories().then(json => {
-            if (json.success) {
-                dispatch(fetchAllCategoriesSuccess(json.data))
-            }
-            return json;
-        })
-    }
-}
-
-
-// Topic
 
 export function createTopic(params) {
     return dispatch => {
@@ -93,5 +51,62 @@ export function fetchTopicAction(id) {
             }
             return json;
         })
+    }
+}
+
+// User actions
+
+export function fetchCurrentUserSuccess(currentUser) {
+    return {
+        type: FETCH_CURRENT_USER_SUCCESS,
+        currentUser
+    }
+}
+
+export function fetchCurrentUser() {
+    return dispatch => {
+        return api.fetchCurrentUser().then(json => {
+            if (json.success) {
+                dispatch(fetchCurrentUserSuccess(json.data))
+            }
+            return json
+        })
+    }
+}
+
+// Category actions
+
+export function fetchAllCategoriesSuccess(categories) {
+    return {
+        type: FETCH_ALL_CATEGORIES_SUCCESS,
+        categories
+    }
+}
+
+export function fetchAllCategories() {
+    return dispatch => {
+        return api.fetchAllCategories().then(json => {
+            if (json.success) {
+                dispatch(fetchAllCategoriesSuccess(json.data))
+            }
+            return json;
+        })
+    }
+}
+
+export function createTopicPostSuccess(post) {
+    return {
+        type: CREATE_TOPIC_POST_SUCCESS,
+        post
+    }
+}
+
+export function createTopicPostAction(params) {
+    return dispatch => {
+        return api.createTopicPost(params).then(json => {
+            if (json.success) {
+                dispatch(createTopicPostSuccess(json.data));
+            }
+        });
     }
 }

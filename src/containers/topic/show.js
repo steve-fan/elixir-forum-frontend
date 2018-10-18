@@ -1,13 +1,16 @@
 import React, { Component } from "react";
-import Moment from "moment";
-import ReactDOMServer from "react-dom/server";
 import { connect } from "react-redux";
 import Spin from "antd/lib/spin";
-import Trix from "trix";
 import Navigation from "../../components/nav";
-import { TagLink } from "../../components/tag";
 import { Topic } from "../../components/topic";
-import { fetchTopicAction, fetchCurrentUser } from "../../actions/user-action-creator";
+import PostForm from "../../components/post/form";
+
+import {
+    fetchTopicAction,
+    createTopicPostAction,
+    fetchCurrentUser
+} from "../../actions/user-action-creator";
+
 import "./style.scss";
 
 class ShowTopicContainer extends Component {
@@ -15,6 +18,8 @@ class ShowTopicContainer extends Component {
         super(props);
 
         this.state = {}
+
+        this.handleSubmitPost = this.handleSubmitPost.bind(this);
     }
 
     componentDidMount() {
@@ -35,9 +40,21 @@ class ShowTopicContainer extends Component {
                       <Topic {...topic} /> :
                       <Spin spinning={true}></Spin>
                     }
+                    <PostForm onSubmit={this.handleSubmitPost} />
                 </div>
             </div>
         );
+    }
+
+    handleSubmitPost(html) {
+        const topicId = this.props.match.params.topicId;
+        const params = {
+            post: {
+                content: html,
+                topic_id: topicId
+            }
+        }
+        return this.props.createTopicPostAction(params);
     }
 };
 
@@ -50,5 +67,6 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
     fetchTopicAction,
-    fetchCurrentUser
+    fetchCurrentUser,
+    createTopicPostAction
 })(ShowTopicContainer);

@@ -3,19 +3,19 @@ import {
     httpGet
 } from "./utils";
 
-// User
+// User API
 
 export const fetchCurrentUser = () => {
     return httpGet("/current_user");
 }
 
-// Category
+// Category API
 
 export const fetchAllCategories = () => {
     return httpGet("/categories")
 }
 
-// Topic
+// Topic API
 
 export const createTopic = (params) => {
     return httpPostJson("/topics", params);
@@ -29,10 +29,17 @@ export const fetchTopic = (id) => {
     return httpGet(`/topics/${id}`);
 }
 
+// Post API
+
+export const createTopicPost = (params) => {
+    return httpPostJson("/posts", params);
+}
+
 export default {
     fetchCurrentUser,
     fetchAllCategories,
     createTopic,
     fetchLatestTopics,
     fetchTopic,
+    createTopicPost
 }

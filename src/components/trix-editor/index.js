@@ -184,8 +184,4 @@ TrixEditor.propTypes = {
     onChange: PropTypes.func
 }
 
-TrixEditor.defaultProps = {
-    value: ""
-}
-
 export default TrixEditor;

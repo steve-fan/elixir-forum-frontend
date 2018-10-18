@@ -53,5 +53,8 @@ export const Topic = (topic) => (
             { topic.tags.map(tag => <TagLink key={tag.id} {...tag} />) }
         </div>
         <Post {...topic} />
+        <div>
+            { topic.posts.map(post => <Post key={post.id} {...post}/>)}
+        </div>
     </div>
 )

@@ -1,13 +1,15 @@
 import React, { Component } from "react";
-import TrixEditor from "../../components/trix-editor";
 import { Button } from "@blueprintjs/core";
+import TrixEditor from "../trix-editor";
 
-class PostCommentForm extends Component {
+class PostForm extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            content: "{}"
+            content: ""
         }
+
         this.handleContentChange = this.handleContentChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -15,9 +17,12 @@ class PostCommentForm extends Component {
     render() {
         return (
             <div className="ep-comment-form pt2">
-                <img className="avatar comment-avatar" alt="avatar" src="/avatar.png" />
+                <img
+                    className="avatar comment-avatar"
+                    alt="avatar" src="/avatar.png"
+                />
                 <TrixEditor
-                    placeholder="添加评论..."
+                    placeholder="撰写评论..."
                     value={this.state.content}
                     uploadURL="/api/image.upload"
                     uploadData={{}}
@@ -32,7 +37,7 @@ class PostCommentForm extends Component {
                     </Button>
                 </div>
             </div>
-        );
+        )
     }
 
     handleContentChange(html, raw) {
@@ -40,8 +45,10 @@ class PostCommentForm extends Component {
     }
 
     handleSubmit(e) {
-        this.props.onSubmit(this.state.content);
+        this.props.onSubmit(this.state.content).then(json => {
+            this.setState({ content: "here" });
+        });
     }
 };
 
-export default PostCommentForm;
+export default PostForm;
