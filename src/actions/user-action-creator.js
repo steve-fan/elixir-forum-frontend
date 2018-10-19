@@ -107,6 +107,7 @@ export function createTopicPostAction(params) {
             if (json.success) {
                 dispatch(createTopicPostSuccess(json.data));
             }
+            return json;
         });
     }
 }

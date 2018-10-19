@@ -10,6 +10,8 @@ class PostForm extends Component {
             content: ""
         }
 
+        this.trixEditorRef = React.createRef();
+
         this.handleContentChange = this.handleContentChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -22,6 +24,7 @@ class PostForm extends Component {
                     alt="avatar" src="/avatar.png"
                 />
                 <TrixEditor
+                    ref={this.trixEditorRef}
                     placeholder="撰写评论..."
                     value={this.state.content}
                     uploadURL="/api/image.upload"
@@ -41,14 +44,18 @@ class PostForm extends Component {
     }
 
     handleContentChange(html, raw) {
+
         this.setState({ content: html });
     }
 
     handleSubmit(e) {
         this.props.onSubmit(this.state.content).then(json => {
-            this.setState({ content: "here" });
+            if (json.success) {
+                this.trixEditorRef.current.editor.loadHTML("");
+            }
         });
     }
 };
+
 
 export default PostForm;

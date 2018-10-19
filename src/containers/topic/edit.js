@@ -1,15 +1,18 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Button } from "@blueprintjs/core";
 import TrixEditor from "../../components/trix-editor";
-import { fetchPost, updatePost } from "../../services/api";
+import {
+    fetchTopicAction
+} from "../../actions/user-action-creator";
 
-class PostEditContainer extends Component {
+class EditTopicContainer extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            loading: true,
-            post: null,
+            title: "",
+            content: ""
         }
 
         this.handleTitleChange = this.handleTitleChange.bind(this);
@@ -18,22 +21,15 @@ class PostEditContainer extends Component {
     }
 
     componentDidMount() {
-        const postId = this.props.match.params.postId;
-        fetchPost(postId).then(json => {
-            this.setState({
-                post: json.data,
-                loading: false
-            });
-        })
+        const topicId = this.props.match.params.topicId;
+        this.props.fetchTopicAction(topicId);
     }
 
     render() {
-        const {post, loading} = this.state;
+        const { topic } = this.props;
 
         let element;
-        if (loading) {
-            element = <div>loading</div>;
-        } else {
+        if (topic) {
             element = (
                 <div>
                     <div className="mb2">
@@ -41,22 +37,24 @@ class PostEditContainer extends Component {
                             className="bp3-input bp3-fill bp3-large"
                             type="text"
                             placeholder="Title..."
-                            value={post.title}
+                            value={topic.title}
                             onChange={this.handleTitleChange}
                         />
                     </div>
                     <div className="mb2">
                         <TrixEditor
                             placeholder="editor's placeholder"
-                            value={post.content}
+                            value={topic.content}
                             uploadURL="/api/image.upload"
                             uploadData={{}}
                             onChange={this.handleContentChange}
                         />
                     </div>
-                    <Button intent="success" onClick={this.handleSubmit}>Update post</Button>
+                    <Button intent="success" onClick={this.handleSubmit}>修改话题</Button>
                 </div>
             );
+        } else {
+            element = <div>loading</div>;
         }
 
         return (
@@ -67,34 +65,27 @@ class PostEditContainer extends Component {
     }
 
     handleTitleChange(e) {
-        this.setState({
-            post: {
-                ...this.state.post,
-                title: e.target.value
-            }
-        });
+        this.setState({title: e.target.value});
     }
 
     handleContentChange(html, raw) {
-        this.setState({
-            post: {
-                ...this.state.post,
-                content: html
-            }
-        });
+        this.setState({content: html});
     }
 
     handleSubmit() {
-        console.log(this.state.post);
         const params = {
             id: this.props.match.params.postId,
             title: this.state.post.title,
             content: this.state.post.content
         }
-        updatePost(params).then(json => {
-            this.setState({ post: json.data })
-        });
     }
 };
 
-export default PostEditContainer;
+const mapStateToProps = (state) => ({
+    currentUser: state.user.currentUser,
+    topic: state.topic.currentTopic,
+})
+
+export default connect(mapStateToProps, {
+    fetchTopicAction
+})(EditTopicContainer);

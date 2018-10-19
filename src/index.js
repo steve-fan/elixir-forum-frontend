@@ -14,6 +14,7 @@ import reducers from "./reducers/index";
 import Home from './containers/home';
 import NewTopicContainer from "./containers/topic/new"
 import ShowTopicContainer from "./containers/topic/show"
+import EditTopicContainer from "./containers/topic/edit"
 import LoginContainer from "./containers/login"
 
 
@@ -32,6 +33,7 @@ render(
             <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/t/new" component={NewTopicContainer} />
+                <Route path="/t/:topicId/edit" component={EditTopicContainer} />
                 <Route path="/t/:topicId" component={ShowTopicContainer} />
                 <Route path="/login" component={LoginContainer} />
             </Switch>
