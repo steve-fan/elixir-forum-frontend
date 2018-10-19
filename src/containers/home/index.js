@@ -17,7 +17,6 @@ import Navigation from "../../components/nav";
 import SubNavigation from "../../components/nav/sub";
 import {
     fetchLatestTopicsAction,
-    fetchCurrentUser
 } from "../../actions/user-action-creator";
 import Moment from "moment";
 import "./style.scss"
@@ -31,15 +30,14 @@ class Home extends Component {
 
     componentDidMount() {
         this.props.fetchLatestTopicsAction();
-        this.props.fetchCurrentUser();
     }
 
     render() {
-        const {topics, currentUser} = this.props;
+        const {topics, currentUser, notifications} = this.props;
 
         return (
             <div className="home">
-                <Navigation currentUser={currentUser} />
+                <Navigation currentUser={currentUser} notifications={notifications} />
                 <div className="main-wrapper">
                     <div className="container">
                         <div className="category-nav flex justify-between">
@@ -62,11 +60,11 @@ class Home extends Component {
 
 const mapStateToProps = (state) => ({
     currentUser: state.user.currentUser,
+    notifications: state.user.notifications,
     topics: state.topic.topics
 })
 
 
 export default connect(mapStateToProps, {
-    fetchLatestTopicsAction,
-    fetchCurrentUser
+    fetchLatestTopicsAction
 })(Home);

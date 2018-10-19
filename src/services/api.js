@@ -35,11 +35,26 @@ export const createTopicPost = (params) => {
     return httpPostJson("/posts", params);
 }
 
+// Notification API
+
+export const fetchNotifications = (params) => {
+    return httpPostJson("/notifications.list", params);
+}
+
+export const fetchUnreadNotifications = () => {
+    return httpPostJson("/notifications.list", {
+        filter: {
+            read: false
+        }
+    });
+}
+
 export default {
     fetchCurrentUser,
     fetchAllCategories,
     createTopic,
     fetchLatestTopics,
     fetchTopic,
-    createTopicPost
+    createTopicPost,
+    fetchUnreadNotifications
 }

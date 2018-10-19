@@ -35,12 +35,12 @@ class NewTopicContainer extends Component {
     }
 
     render() {
-        const {currentUser, categories} = this.props;
+        const {currentUser, categories, notifications} = this.props;
         const { selectedCategory } = this.state;
 
         return (
             <div className="topic-new">
-                <Navigation currentUser={currentUser} />
+                <Navigation currentUser={currentUser} notifications={notifications} />
                 <div className="container ep-post-container pt2">
                     <form action="">
                         <div className="mb2">
@@ -124,6 +124,7 @@ class NewTopicContainer extends Component {
 const mapStateToProps = state => {
     return {
         currentUser: state.user.currentUser,
+        notifications: state.user.notifications,
         categories: state.category.categories
     }
 }

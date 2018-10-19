@@ -5,7 +5,8 @@ import {
     FETCH_ALL_CATEGORIES_SUCCESS,
     FETCH_TOPIC_SUCCESS,
     FETCH_LATEST_TOPICS_SUCCESS,
-    CREATE_TOPIC_POST_SUCCESS
+    CREATE_TOPIC_POST_SUCCESS,
+    FETCH_UNREAD_NOTIFICATIONS_SUCCESS
 } from "../constants/action-types";
 
 // Topic actions
@@ -108,6 +109,25 @@ export function createTopicPostAction(params) {
                 dispatch(createTopicPostSuccess(json.data));
             }
             return json;
+        });
+    }
+}
+
+
+// Notification actions
+export function fetchUnreadNotificationsSuccess(notifications) {
+    return {
+        type: FETCH_UNREAD_NOTIFICATIONS_SUCCESS,
+        notifications
+    };
+}
+
+export function fetchUnreadNotificationsAction() {
+    return dispatch => {
+        return api.fetchUnreadNotifications().then(json => {
+            if (json.success) {
+                dispatch(fetchUnreadNotificationsSuccess(json.data));
+            }
         });
     }
 }

@@ -8,7 +8,6 @@ import PostForm from "../../components/post/form";
 import {
     fetchTopicAction,
     createTopicPostAction,
-    fetchCurrentUser
 } from "../../actions/user-action-creator";
 
 import "./style.scss";
@@ -23,18 +22,16 @@ class ShowTopicContainer extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchCurrentUser()
-
         const topicId = this.props.match.params.topicId;
         this.props.fetchTopicAction(topicId);
     }
 
     render() {
-        const { topic, currentUser } = this.props;
+        const { topic, currentUser, notifications } = this.props;
 
         return (
             <div className="topic-show">
-                <Navigation currentUser={currentUser} />
+                <Navigation currentUser={currentUser} notifications={notifications} />
                 <div className="container ep-post-container">
                     { topic ?
                       <Topic {...topic} /> :
@@ -61,12 +58,12 @@ class ShowTopicContainer extends Component {
 const mapStateToProps = (state) => {
     return {
         currentUser: state.user.currentUser,
+        notifications: state.user.notifications,
         topic: state.topic.currentTopic
     }
 }
 
 export default connect(mapStateToProps, {
     fetchTopicAction,
-    fetchCurrentUser,
     createTopicPostAction
 })(ShowTopicContainer);

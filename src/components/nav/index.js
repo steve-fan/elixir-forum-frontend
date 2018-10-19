@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
+import Badge from "antd/lib/badge";
 import Menu, { Item as MenuItem } from "antd/lib/menu";
-import { Menu as BPMenu } from "@blueprintjs/core";
+import { Icon, Menu as BPMenu, Position } from "@blueprintjs/core";
 import { MenuItem as BPMenuItem } from "@blueprintjs/core";
 import { Popover} from "@blueprintjs/core";
 import { UserAvatar} from "../../components/avatar";
@@ -24,7 +25,8 @@ const NavbarAvatar = (props) => {
 
 class Navigation extends Component {
     render() {
-        const { currentUser } = this.props;
+        const { currentUser, notifications } = this.props;
+        const notificationCount = notifications ? notifications.data.length : 0;
 
         return (
             <header className="clearfix top-nav">
@@ -43,6 +45,11 @@ class Navigation extends Component {
                             <Menu mode="horizontal" className="right-menu">
                                 <MenuItem className="menu-item-about">
                                     <Link to="/about">关于</Link>
+                                </MenuItem>
+                                <MenuItem>
+                                    <Badge count={notificationCount} offset={[8, 0]} style={{background: "#FF6E4A"}}>
+                                        <span>通知</span>
+                                    </Badge>
                                 </MenuItem>
                                 <MenuItem className="menu-item-login">
                                     { currentUser ? <NavbarAvatar {...currentUser} /> : <Link to="/login">登录</Link>}

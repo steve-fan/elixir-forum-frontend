@@ -11,12 +11,17 @@ import "moment/locale/zh-cn";
 
 import registerServiceWorker from './registerServiceWorker';
 import reducers from "./reducers/index";
+
 import Home from './containers/home';
 import NewTopicContainer from "./containers/topic/new"
 import ShowTopicContainer from "./containers/topic/show"
 import EditTopicContainer from "./containers/topic/edit"
 import LoginContainer from "./containers/login"
 
+import {
+    fetchCurrentUser,
+    fetchUnreadNotificationsAction
+} from "./actions/user-action-creator";
 
 import "./styles/index.css"
 
@@ -41,5 +46,9 @@ render(
     </Provider>,
     document.getElementById('root')
 );
+
+//
+store.dispatch(fetchCurrentUser());
+store.dispatch(fetchUnreadNotificationsAction());
 
 registerServiceWorker();
