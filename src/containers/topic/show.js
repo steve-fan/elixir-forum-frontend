@@ -21,6 +21,15 @@ class ShowTopicContainer extends Component {
         this.handleSubmitPost = this.handleSubmitPost.bind(this);
     }
 
+    componentDidUpdate(prevProps) {
+        const prevTopicId = prevProps.match.params.topicId;
+        const topicId = this.props.match.params.topicId;
+
+        if (topicId != prevTopicId) {
+            this.props.fetchTopicAction(topicId);
+        }
+    }
+
     componentDidMount() {
         const topicId = this.props.match.params.topicId;
         this.props.fetchTopicAction(topicId);
