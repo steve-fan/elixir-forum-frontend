@@ -17,6 +17,7 @@ import NewTopicContainer from "./containers/topic/new"
 import ShowTopicContainer from "./containers/topic/show"
 import EditTopicContainer from "./containers/topic/edit"
 import CategoryTopicContainer from "./containers/topic/category";
+import TopTopicContainer from "./containers/topic/top";
 import LoginContainer from "./containers/login"
 
 import {
@@ -38,9 +39,11 @@ render(
         <ConnectedRouter history={history}>
             <Switch>
                 <Route exact path="/" component={Home} />
+                <Route path="/top" component={TopTopicContainer} />
                 <Route path="/t/new" component={NewTopicContainer} />
                 <Route path="/t/:topicId/edit" component={EditTopicContainer} />
                 <Route path="/t/:topicId" component={ShowTopicContainer} />
+                <Route path="/categories/:categoryId/top" component={TopTopicContainer} />
                 <Route path="/categories/:categoryId" component={CategoryTopicContainer} />
                 <Route path="/login" component={LoginContainer} />
             </Switch>

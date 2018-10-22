@@ -25,20 +25,6 @@ const categorySelectItemRenderer = (category, { handleClick, modifiers, query })
     );
 }
 
-/* const categorySelectMenuRender = ({items, itemsParentRef, query, renderItem}) => {
- *     const renderedItems = items.map(renderItem).filter(item => item != null);
- *
- *     return (
- *         <BPMenu ulRef={itemsParentRef}>
- *             <BPMenuItem
- *                 disabled={true}
- *                 text={`Found ${renderedItems.length} items matching`}
- *             />
- *             {renderedItems}
- *         </BPMenu>
- *     )
- * }*/
-
 const categoryPreciate = (query, category) => {
     return `${category.name.toLowerCase()}`.indexOf(query.toLowerCase()) >= 0;
 }
@@ -75,12 +61,12 @@ class SubNavigation extends Component {
                     </Select>
                 </MenuItem>
                 <MenuItem>
-                    <NavLink to={path} activeClassName="nav-link-active" >
+                    <NavLink to={path ? path : "/"} exact activeClassName="nav-link-active" >
                         <span>最新</span>
                     </NavLink>
                 </MenuItem>
                 <MenuItem>
-                    <NavLink to={`${path}/top`}>
+                    <NavLink to={`${path}/top`} exact activeClassName="nav-link-active">
                         <span>热门</span>
                     </NavLink>
                 </MenuItem>

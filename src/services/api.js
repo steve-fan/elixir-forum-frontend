@@ -29,6 +29,10 @@ export const fetchTopic = (id) => {
     return httpGet(`/topics/${id}`);
 }
 
+export const fetchTopTopics = (params) => {
+    return httpPostJson("/topics/top", params)
+}
+
 // Post API
 
 export const createTopicPost = (params) => {
@@ -58,6 +62,7 @@ export default {
     fetchAllCategories,
     createTopic,
     fetchLatestTopics,
+    fetchTopTopics,
     fetchTopic,
     createTopicPost,
     fetchUnreadNotifications,

@@ -4,7 +4,7 @@ import {
     FETCH_CURRENT_USER_SUCCESS,
     FETCH_ALL_CATEGORIES_SUCCESS,
     FETCH_TOPIC_SUCCESS,
-    FETCH_LATEST_TOPICS_SUCCESS,
+    FETCH_TOPICS_SUCCESS,
     CREATE_TOPIC_POST_SUCCESS,
     FETCH_UNREAD_NOTIFICATIONS_SUCCESS,
     MARK_NOTIFICATION_SUCCESS
@@ -12,9 +12,9 @@ import {
 
 // Topic actions
 
-export function fetchLatestTopicsActionSuccess(json) {
+export function fetchTopicsActionSuccess(json) {
     return {
-        type: FETCH_LATEST_TOPICS_SUCCESS,
+        type: FETCH_TOPICS_SUCCESS,
         topics: json.data
     }
 }
@@ -23,13 +23,24 @@ export function fetchLatestTopicsAction(params) {
     return dispatch => {
         return api.fetchLatestTopics(params).then(json => {
             if (json.success) {
-                dispatch(fetchLatestTopicsActionSuccess(json));
+                dispatch(fetchTopicsActionSuccess(json));
             }
 
             return json;
         });
     }
 }
+
+export function fetchTopTopicsAction(params) {
+    return dispatch => {
+        return api.fetchTopTopics(params).then(json => {
+            if (json.success) {
+                dispatch(fetchTopicsActionSuccess(json));
+            }
+        });
+    }
+}
+
 
 export function createTopic(params) {
     return dispatch => {
