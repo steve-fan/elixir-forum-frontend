@@ -19,9 +19,9 @@ export function fetchLatestTopicsActionSuccess(json) {
     }
 }
 
-export function fetchLatestTopicsAction() {
+export function fetchLatestTopicsAction(params) {
     return dispatch => {
-        return api.fetchLatestTopics().then(json => {
+        return api.fetchLatestTopics(params).then(json => {
             if (json.success) {
                 dispatch(fetchLatestTopicsActionSuccess(json));
             }

@@ -17,7 +17,8 @@ import Navigation from "../../components/nav";
 import SubNavigation from "../../components/nav/sub";
 import {
     fetchLatestTopicsAction,
-    markNotificationAction
+    markNotificationAction,
+    fetchAllCategories
 } from "../../actions/user-action-creator";
 import Moment from "moment";
 import "./style.scss"
@@ -31,6 +32,7 @@ class Home extends Component {
 
     componentDidMount() {
         this.props.fetchLatestTopicsAction();
+        this.props.fetchAllCategories();
     }
 
     render() {
@@ -46,7 +48,10 @@ class Home extends Component {
                 <div className="main-wrapper">
                     <div className="container">
                         <div className="category-nav flex justify-between">
-                            <SubNavigation />
+                            <SubNavigation
+                                categories={this.props.categories}
+                                onSelectCategory={this.props.fetchLatestTopicsAction}
+                            />
                             <div className="flex items-center">
                                 <AnchorButton icon="plus" href="/t/new" intent="success">创建话题</AnchorButton>
                             </div>
@@ -66,11 +71,13 @@ class Home extends Component {
 const mapStateToProps = (state) => ({
     currentUser: state.user.currentUser,
     notifications: state.user.notifications,
-    topics: state.topic.topics
+    topics: state.topic.topics,
+    categories: state.category.categories
 })
 
 
 export default connect(mapStateToProps, {
     fetchLatestTopicsAction,
-    markNotificationAction
+    markNotificationAction,
+    fetchAllCategories
 })(Home);
