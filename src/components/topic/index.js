@@ -19,7 +19,9 @@ export const topicItemRenderer = (item) => {
                 </div>
             </Col>
             <Col span={4} className="topic-category">
-                <Tag color={item.category.background}>{item.category.name}</Tag>
+                <Link to={`/categories/${item.category.id}`}>
+                    <Tag color={item.category.background}>{item.category.name}</Tag>
+                </Link>
             </Col>
             <Col span={4} className="topic-users">
                 <img alt={item.creator.name} src={item.creator.avatar_url} />

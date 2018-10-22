@@ -16,6 +16,7 @@ import Home from './containers/home';
 import NewTopicContainer from "./containers/topic/new"
 import ShowTopicContainer from "./containers/topic/show"
 import EditTopicContainer from "./containers/topic/edit"
+import CategoryTopicContainer from "./containers/topic/category";
 import LoginContainer from "./containers/login"
 
 import {
@@ -40,6 +41,7 @@ render(
                 <Route path="/t/new" component={NewTopicContainer} />
                 <Route path="/t/:topicId/edit" component={EditTopicContainer} />
                 <Route path="/t/:topicId" component={ShowTopicContainer} />
+                <Route path="/categories/:categoryId" component={CategoryTopicContainer} />
                 <Route path="/login" component={LoginContainer} />
             </Switch>
         </ConnectedRouter>

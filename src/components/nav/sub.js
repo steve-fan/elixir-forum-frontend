@@ -16,13 +16,28 @@ const categorySelectItemRenderer = (category, { handleClick, modifiers, query })
             className="category-select-item"
             active={modifiers.active}
             disabled={modifiers.disabled}
-            label={category.name}
+            label={category.topics_count}
             key={category.id}
             onClick={handleClick}
+            href={`/categories/${category.id}`}
             text={<Tag color={category.background}>{category.name}</Tag>}
         />
     );
 }
+
+/* const categorySelectMenuRender = ({items, itemsParentRef, query, renderItem}) => {
+ *     const renderedItems = items.map(renderItem).filter(item => item != null);
+ *
+ *     return (
+ *         <BPMenu ulRef={itemsParentRef}>
+ *             <BPMenuItem
+ *                 disabled={true}
+ *                 text={`Found ${renderedItems.length} items matching`}
+ *             />
+ *             {renderedItems}
+ *         </BPMenu>
+ *     )
+ * }*/
 
 const categoryPreciate = (query, category) => {
     return `${category.name.toLowerCase()}`.indexOf(query.toLowerCase()) >= 0;
@@ -40,7 +55,7 @@ class SubNavigation extends Component {
     }
 
     render() {
-        const { category } = this.state;
+        const category = this.state.category ? this.state.currentCategory : this.props.currentCategory;
 
         return (
             <Menu mode="horizontal" style={{marginLeft: -20}}>
@@ -70,13 +85,6 @@ class SubNavigation extends Component {
 
     handleSelectCategoryItem(category) {
         this.setState({category})
-        const params = {
-            filter: {
-                category_id: category.id
-            }
-        };
-
-        this.props.onSelectCategory(params);
     }
 };
 
