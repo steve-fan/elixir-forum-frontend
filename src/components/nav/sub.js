@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Menu, { Item as MenuItem } from "antd/lib/menu";
 import { Menu as BPMenu, MenuItem as BPMenuItem} from "@blueprintjs/core";
 import { AnchorButton, Button, Icon } from "@blueprintjs/core";
@@ -55,6 +55,7 @@ class SubNavigation extends Component {
     }
 
     render() {
+        const {path} = this.props;
         const category = this.state.category ? this.state.currentCategory : this.props.currentCategory;
 
         return (
@@ -74,10 +75,14 @@ class SubNavigation extends Component {
                     </Select>
                 </MenuItem>
                 <MenuItem>
-                    <Link to="/latest">最新</Link>
+                    <NavLink to={path} activeClassName="nav-link-active" >
+                        <span>最新</span>
+                    </NavLink>
                 </MenuItem>
                 <MenuItem>
-                    <Link to="/hot">热门</Link>
+                    <NavLink to={`${path}/top`}>
+                        <span>热门</span>
+                    </NavLink>
                 </MenuItem>
             </Menu>
         );

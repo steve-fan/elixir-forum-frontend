@@ -49,6 +49,7 @@ class Home extends Component {
                     <div className="container">
                         <div className="category-nav flex justify-between">
                             <SubNavigation
+                                path=""
                                 categories={this.props.categories}
                                 onSelectCategory={this.props.fetchLatestTopicsAction}
                             />

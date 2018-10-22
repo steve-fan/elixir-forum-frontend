@@ -20,3 +20,9 @@ trix-editor:focus {
 .ant-tag {
     border-radius: 2px;
 }
+
+.nav-link-active {
+    color: #8F398F;
+    border-bottom: 1px solid #8F398F;
+    font-weight: bold;
+}

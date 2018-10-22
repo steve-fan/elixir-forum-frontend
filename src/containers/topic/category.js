@@ -38,9 +38,8 @@ class CategoryTopicContainer extends Component {
     }
 
     render() {
+        const categoryId = this.props.match.params.categoryId;
         const {topics, currentUser, notifications, categories} = this.props;
-        console.log(categories);
-        console.log(this.props.match.params.categoryId);
 
         const currentCategory = categories.find(c => c.id == this.props.match.params.categoryId);
         console.log(currentCategory);
@@ -56,6 +55,7 @@ class CategoryTopicContainer extends Component {
                     <div className="container">
                         <div className="category-nav flex justify-between">
                             <SubNavigation
+                                path={`/categories/${categoryId}`}
                                 categories={categories}
                                 currentCategory={currentCategory}
                             />
