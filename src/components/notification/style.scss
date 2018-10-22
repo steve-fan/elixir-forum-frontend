@@ -1,0 +1,41 @@
+.notification {
+    padding: 10px;
+    text-decoration: none;
+
+    &:hover, &:visited {
+        background: #faf8f7;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .notification-avatar {
+        margin-right: 8px;
+
+        .avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 17px;
+        }
+    }
+
+    .notification-content {
+        flex: 1;
+        max-width: 400px;
+    }
+
+    .notification-footnote {
+        color: #ddd;
+        font-size: 12px;
+
+        span:not(:first-child) {
+            margin-left: 8px;
+        }
+    }
+
+    .unread-indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 4px;
+        background: #FF6E4A;
+    }
+}

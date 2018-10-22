@@ -49,6 +49,10 @@ export const fetchUnreadNotifications = () => {
     });
 }
 
+export const markNotification = (id) => {
+    return httpPostJson(`/notifications/${id}`, {read: true});
+}
+
 export default {
     fetchCurrentUser,
     fetchAllCategories,
@@ -56,5 +60,6 @@ export default {
     fetchLatestTopics,
     fetchTopic,
     createTopicPost,
-    fetchUnreadNotifications
+    fetchUnreadNotifications,
+    markNotification
 }

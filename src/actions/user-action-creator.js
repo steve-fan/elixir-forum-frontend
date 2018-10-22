@@ -6,7 +6,8 @@ import {
     FETCH_TOPIC_SUCCESS,
     FETCH_LATEST_TOPICS_SUCCESS,
     CREATE_TOPIC_POST_SUCCESS,
-    FETCH_UNREAD_NOTIFICATIONS_SUCCESS
+    FETCH_UNREAD_NOTIFICATIONS_SUCCESS,
+    MARK_NOTIFICATION_SUCCESS
 } from "../constants/action-types";
 
 // Topic actions
@@ -127,6 +128,23 @@ export function fetchUnreadNotificationsAction() {
         return api.fetchUnreadNotifications().then(json => {
             if (json.success) {
                 dispatch(fetchUnreadNotificationsSuccess(json.data));
+            }
+        });
+    }
+}
+
+export function markNotificationSuccess(notification) {
+    return {
+        type: MARK_NOTIFICATION_SUCCESS,
+        notification
+    }
+}
+
+export function markNotificationAction(id) {
+    return dispatch => {
+        return api.markNotification(id).then(json => {
+            if (json.success) {
+                dispatch(markNotificationSuccess(json.data));
             }
         });
     }

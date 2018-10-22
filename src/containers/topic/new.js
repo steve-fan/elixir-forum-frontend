@@ -7,7 +7,8 @@ import TrixEditor from "../../components/trix-editor";
 
 import {
     fetchAllCategories,
-    createTopic
+    createTopic,
+    markNotificationAction
 } from "../../actions/user-action-creator";
 
 import "./style.scss";
@@ -40,7 +41,11 @@ class NewTopicContainer extends Component {
 
         return (
             <div className="topic-new">
-                <Navigation currentUser={currentUser} notifications={notifications} />
+                <Navigation
+                    currentUser={currentUser}
+                    notifications={notifications}
+                    onClickNotification={this.props.markNotificationAction}
+                />
                 <div className="container ep-post-container pt2">
                     <form action="">
                         <div className="mb2">
@@ -132,5 +137,6 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
     fetchAllCategories,
-    createTopic
+    createTopic,
+    markNotificationAction
 })(NewTopicContainer);

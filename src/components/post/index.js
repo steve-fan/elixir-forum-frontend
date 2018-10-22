@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import Moment from "moment";
 
-const Post = ({content, created_at, creator}) => (
-    <div className="ep-post-comment">
+const Post = ({content, created_at, creator, id}) => (
+    <div className="ep-post-comment" id={`post-${id}`}>
         <header className="ep-comment-header">
             <strong className="comment-name">Steve Fan</strong>
             <span className="comment-timestamp">{Moment(created_at).fromNow()}</span>

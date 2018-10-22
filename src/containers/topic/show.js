@@ -8,6 +8,7 @@ import PostForm from "../../components/post/form";
 import {
     fetchTopicAction,
     createTopicPostAction,
+    markNotificationAction
 } from "../../actions/user-action-creator";
 
 import "./style.scss";
@@ -40,7 +41,11 @@ class ShowTopicContainer extends Component {
 
         return (
             <div className="topic-show">
-                <Navigation currentUser={currentUser} notifications={notifications} />
+                <Navigation
+                    currentUser={currentUser}
+                    notifications={notifications}
+                    onClickNotification={this.props.markNotificationAction}
+                />
                 <div className="container ep-post-container">
                     { topic ?
                       <Topic {...topic} /> :
@@ -74,5 +79,6 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
     fetchTopicAction,
-    createTopicPostAction
+    createTopicPostAction,
+    markNotificationAction
 })(ShowTopicContainer);
