@@ -18,6 +18,10 @@ class NotificationPopover extends Component {
     render() {
         const {items} = this.props;
 
+        if (items.length == 0) {
+            return <span>通知</span>;
+        }
+
         return (
             <Popover isOpen={this.state.isOpen}>
                 <Badge
