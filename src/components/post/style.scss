@@ -1,0 +1,11 @@
+.post-action {
+    > div {
+        &:hover {
+            color: #333;
+        }
+    }
+
+    .post-action__reply, .post-action__thumbup {
+        cursor: pointer;
+    }
+}

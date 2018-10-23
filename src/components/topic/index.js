@@ -5,6 +5,7 @@ import Tag from "antd/lib/tag";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import { TagLink } from "../tag";
+import TopicContent from "./content";
 import Post from "../post";
 
 export const topicItemRenderer = (item) => {
@@ -45,7 +46,7 @@ export const TopicListHeader = (props) => (
     </Row>
 )
 
-export const Topic = (topic) => (
+export const Topic = ({topic, onSubmitReply}) => (
     <div>
         <div className="h2 pt3 pb1">{topic.title}</div>
         <div className="flex pb2">
@@ -54,9 +55,9 @@ export const Topic = (topic) => (
             </Link>
             { topic.tags.map(tag => <TagLink key={tag.id} {...tag} />) }
         </div>
-        <Post {...topic} />
+        <TopicContent {...topic} />
         <div>
-            { topic.posts.map(post => <Post key={post.id} {...post}/>)}
+            { topic.posts.map(post => <Post key={post.id} {...post} onSubmitReply={onSubmitReply} />)}
         </div>
     </div>
 )

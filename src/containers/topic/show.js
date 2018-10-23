@@ -8,7 +8,8 @@ import PostForm from "../../components/post/form";
 import {
     fetchTopicAction,
     createTopicPostAction,
-    markNotificationAction
+    markNotificationAction,
+    createPostReplyAction,
 } from "../../actions/user-action-creator";
 
 import "./style.scss";
@@ -48,7 +49,7 @@ class ShowTopicContainer extends Component {
                 />
                 <div className="container ep-post-container">
                     { topic ?
-                      <Topic {...topic} /> :
+                      <Topic topic={topic} onSubmitReply={this.props.createPostReplyAction} /> :
                       <Spin spinning={true}></Spin>
                     }
                     <PostForm onSubmit={this.handleSubmitPost} />
@@ -80,5 +81,6 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
     fetchTopicAction,
     createTopicPostAction,
-    markNotificationAction
+    markNotificationAction,
+    createPostReplyAction
 })(ShowTopicContainer);

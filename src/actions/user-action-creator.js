@@ -7,7 +7,8 @@ import {
     FETCH_TOPICS_SUCCESS,
     CREATE_TOPIC_POST_SUCCESS,
     FETCH_UNREAD_NOTIFICATIONS_SUCCESS,
-    MARK_NOTIFICATION_SUCCESS
+    MARK_NOTIFICATION_SUCCESS,
+    CREATE_POST_REPLY_SUCCESS,
 } from "../constants/action-types";
 
 // Topic actions
@@ -119,6 +120,24 @@ export function createTopicPostAction(params) {
         return api.createTopicPost(params).then(json => {
             if (json.success) {
                 dispatch(createTopicPostSuccess(json.data));
+            }
+            return json;
+        });
+    }
+}
+
+export function createPostReplySuccess(post) {
+    return {
+        type: CREATE_POST_REPLY_SUCCESS,
+        post
+    }
+}
+
+export function createPostReplyAction(reply) {
+    return dispatch => {
+        return api.createTopicPost({post: reply}).then(json => {
+            if (json.success) {
+                dispatch(createPostReplySuccess(json.data));
             }
             return json;
         });
