@@ -57,7 +57,7 @@ export const Topic = ({topic, onSubmitReply}) => (
         </div>
         <TopicContent {...topic} />
         <div>
-            { topic.posts.map(post => <Post key={post.id} {...post} onSubmitReply={onSubmitReply} />)}
+            { topic.posts.map(post => <Post key={post.id} post={post} onSubmitReply={onSubmitReply} />)}
         </div>
     </div>
 )

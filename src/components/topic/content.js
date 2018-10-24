@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Icon } from "@blueprintjs/core";
 import AntIcon from "antd/lib/icon";
+import CommentIcon from "../icons/comment";
 import Moment from "moment";
 import "./style.scss";
 
@@ -9,7 +9,7 @@ class TopicContent extends Component {
         const {content, created_at, posts_count, likes_count, views_count, creator, id} = this.props;
 
         return (
-            <div className="ep-post-comment" id={`post-${id}`}>
+            <div className="ep-post-comment">
                 <header className="ep-comment-header flex mb1">
                     <div className="bold flex-auto">Steve Fan</div>
                     <div className="comment-timestamp muted h6">{Moment(created_at).fromNow()}</div>
@@ -19,17 +19,17 @@ class TopicContent extends Component {
                 <div className="topic-content__statistics flex py1 muted">
                     <div className="topic-content__thumbup_count flex items-center">
                         <AntIcon type="like" />
-                        <span className="ml1">{likes_count}</span>
+                        <span className="">{likes_count}</span>
                         <span> 赞</span>
                     </div>
                     <div className="topic-content__posts_count ml2 flex items-center">
-                        <AntIcon type="message" />
-                        <span className="ml1">{posts_count}</span>
+                        <CommentIcon />
+                        <span className="">{posts_count}</span>
                         <span> 条评论</span>
                     </div>
                     <div className="topic-content_views_count ml2 flex items-center">
                         <AntIcon type="eye" />
-                        <span className="ml1">{views_count}</span>
+                        <span className="">{views_count}</span>
                         <span>浏览</span>
                     </div>
                 </div>

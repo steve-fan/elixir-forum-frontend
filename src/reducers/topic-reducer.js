@@ -1,4 +1,5 @@
 import update from 'immutability-helper';
+import {updateElem} from "../utils";
 
 import {
     FETCH_TOPIC_SUCCESS,
@@ -34,10 +35,17 @@ export default function topicReducer(state = initialState, action) {
             });
 
         case CREATE_POST_REPLY_SUCCESS:
-            // TODO update posts
+            const index = state.currentTopic.posts.findIndex(p => p.id === action.post.parent_post_id)
+            const targetTopic = state.currentTopic.posts[index];
+            const replies = updateElem(targetTopic.replies, "id", action.post)
+            targetTopic.replies = replies;
+
             return update(state, {
                 currentTopic: {
-                    posts: {$push: [action.post]}
+                    posts: {
+                        $splice: [[index, 1, targetTopic]],
+                        $push: [action.post],
+                    },
                 }
             });
 

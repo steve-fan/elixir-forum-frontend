@@ -45,6 +45,12 @@
     }
 
     .ep-comment-header {
+        a {
+            color: #333;
+        }
+        a:hover, a:visited {
+            text-decoration: none;
+        }
         .anticon {
             &:hover {
                 color: #333;

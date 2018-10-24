@@ -1,50 +1,39 @@
 import React, { Component } from "react";
-import TrixEditor from "../trix-editor";
-import { Button } from "@blueprintjs/core";
+import { HashLink } from "react-router-hash-link";
+import Moment from "moment";
+import ReplyBackwardIcon from "../icons/reply-backward";
 
-class PostReply extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            content: ""
-        }
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
+class Reply extends Component {
     render() {
+        const {reply} = this.props;
+
         return (
-            <div className="post-reply py1">
-                <div className="post-reply__editor py1">
-                    <TrixEditor
-                        placeholder="撰写评论..."
-                        value={this.state.content}
-                        uploadURL="/api/image.upload"
-                        uploadData={{}}
-                        onChange={this.handleChange}
+            <div className="post-reply flex my2">
+                <div className="mr2">
+                    <img
+                        alt={reply.creator.name}
+                        src={reply.creator.avatar_url}
+                        style={{ width: 24, height: 24, borderRadius: 12}}
                     />
                 </div>
-                <div className="post-reply__actions">
-                    <Button className="mr2" intent="success" onClick={this.handleSubmit}>发表评论</Button>
-                    <Button intent="danger" onClick={this.props.onCancel}>取消评论</Button>
+                <div className="flex-auto">
+                    <div className="bold mb1 flex items-center">
+                        <div className="flex-auto">{reply.creator.name}</div>
+                        <div>
+                            <HashLink className="muted h6" to={`#post-${reply.id}`}>
+                                <ReplyBackwardIcon />
+                            </HashLink>
+                        </div>
+                        <div className="muted h6 ml2">{Moment(reply.created_at).fromNow()}</div>
+                    </div>
+                    <div
+                        className="trix-content trix-preview flex-auto"
+                        dangerouslySetInnerHTML={{__html: reply.content}}
+                    />
                 </div>
             </div>
         );
     }
-
-    handleChange(content, raw) {
-        this.setState({content});
-    }
-
-    handleSubmit() {
-        const params = {
-            content: this.state.content,
-            parent_post_id: this.props.id,
-            topic_id: this.props.topic_id
-        }
-        this.props.onSubmit(params);
-    }
 };
 
-export default PostReply;
+export default Reply;

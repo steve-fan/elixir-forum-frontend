@@ -54,3 +54,7 @@ trix-editor:focus {
 svg {
     fill: currentColor;
 }
+
+.cursor-pointer {
+    cursor: pointer;
+}
