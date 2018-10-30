@@ -5,6 +5,10 @@ import {
     FETCH_ALL_CATEGORIES_SUCCESS,
     FETCH_TOPIC_SUCCESS,
     FETCH_TOPICS_SUCCESS,
+    FETCH_LATEST_TOPICS_SUCCESS,
+    CLEAN_LATEST_TOPICS,
+    CLEAN_TOP_TOPICS,
+    FETCH_TOP_TOPICS_SUCCESS,
     CREATE_TOPIC_POST_SUCCESS,
     FETCH_UNREAD_NOTIFICATIONS_SUCCESS,
     MARK_NOTIFICATION_SUCCESS,
@@ -13,10 +17,16 @@ import {
 
 // Topic actions
 
-export function fetchTopicsActionSuccess(json) {
+export function fetchLatestTopicsSuccess(json) {
     return {
-        type: FETCH_TOPICS_SUCCESS,
+        type: FETCH_LATEST_TOPICS_SUCCESS,
         topics: json.data
+    }
+}
+
+export function cleanLatestTopicsAction() {
+    return {
+        type: CLEAN_LATEST_TOPICS
     }
 }
 
@@ -24,7 +34,7 @@ export function fetchLatestTopicsAction(params) {
     return dispatch => {
         return api.fetchLatestTopics(params).then(json => {
             if (json.success) {
-                dispatch(fetchTopicsActionSuccess(json));
+                dispatch(fetchLatestTopicsSuccess(json));
             }
 
             return json;
@@ -32,11 +42,24 @@ export function fetchLatestTopicsAction(params) {
     }
 }
 
+export function fetchTopTopicsSuccess(json) {
+    return {
+        type: FETCH_TOP_TOPICS_SUCCESS,
+        topics: json.data
+    }
+}
+
+export function cleanTopTopicsAction() {
+    return {
+        type: CLEAN_TOP_TOPICS
+    }
+}
+
 export function fetchTopTopicsAction(params) {
     return dispatch => {
         return api.fetchTopTopics(params).then(json => {
             if (json.success) {
-                dispatch(fetchTopicsActionSuccess(json));
+                dispatch(fetchTopTopicsSuccess(json));
             }
         });
     }

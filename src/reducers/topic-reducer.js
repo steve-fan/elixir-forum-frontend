@@ -4,22 +4,58 @@ import {updateElem} from "../utils";
 import {
     FETCH_TOPIC_SUCCESS,
     FETCH_TOPICS_SUCCESS,
+    CLEAN_LATEST_TOPICS,
+    FETCH_LATEST_TOPICS_SUCCESS,
+    CLEAN_TOP_TOPICS,
+    FETCH_TOP_TOPICS_SUCCESS,
     CREATE_TOPIC_POST_SUCCESS,
     CREATE_POST_REPLY_SUCCESS
 } from "../constants/action-types"
 
 const initialState = {
     currentTopic: null,
-    topics: {
-        data: []
+    latest: {
+        data: [],
+        pagination: {
+            current_page: 0,
+            per_page: 10
+        }
+    },
+    top: {
+        data: [],
+        pagination: {
+            current_page: 0,
+            per_page: 10
+        }
     }
 }
 
 export default function topicReducer(state = initialState, action) {
     switch (action.type) {
-        case FETCH_TOPICS_SUCCESS:
+        case CLEAN_LATEST_TOPICS:
             return update(state, {
-               topics: {$set: action.topics}
+                latest: {$set: initialState.latest}
+            });
+
+        case FETCH_LATEST_TOPICS_SUCCESS:
+            return update(state, {
+                latest: {
+                    data: {$push: action.topics.data},
+                    pagination: {$set: action.topics.pagination}
+                }
+            });
+
+        case CLEAN_TOP_TOPICS:
+            return update(state, {
+                top: {$set: initialState.top}
+            });
+
+        case FETCH_TOP_TOPICS_SUCCESS:
+            return update(state, {
+                top: {
+                    data: {$push: action.topics.data},
+                    pagination: {$set: action.topics.pagination}
+                }
             });
 
         case FETCH_TOPIC_SUCCESS:

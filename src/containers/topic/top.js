@@ -11,34 +11,35 @@ import { AnchorButton } from "@blueprintjs/core";
 import { Popover } from "@blueprintjs/core";
 import { Menu as BPMenu } from "@blueprintjs/core";
 import { MenuItem as BPMenuItem } from "@blueprintjs/core";
+import InfiniteScroll from "react-infinite-scroller";
 import { topicItemRenderer, TopicListHeader } from "../../components/topic"
 import TopicList from "../../components/topic/list";
 import Navigation from "../../components/nav";
 import SubNavigation from "../../components/nav/sub";
+import InfiniteScrollLoader from "../../components/common/infinite-scroller/loader";
 import {
     fetchTopTopicsAction,
     markNotificationAction,
-    fetchAllCategories
+    fetchAllCategories,
+    cleanTopTopicsAction
 } from "../../actions/user-action-creator";
 import Moment from "moment";
-import "./style.scss"
+import "./style.scss";
 
 class TopTopicContainer extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {}
+        this.state = {
+            isFetching: false
+        }
+
+        this.loadMoreTopics = this.loadMoreTopics.bind(this);
     }
 
     componentDidMount() {
+        this.props.cleanTopTopicsAction();
         this.props.fetchAllCategories();
-
-        const categoryId = this.props.match.params.categoryId;
-        if (categoryId) {
-            this.props.fetchTopTopicsAction({filter: {category_id: categoryId}});
-        } else {
-            this.props.fetchTopTopicsAction();
-        }
     }
 
     render() {
@@ -66,22 +67,57 @@ class TopTopicContainer extends Component {
                                 <AnchorButton icon="plus" href="/t/new" intent="success">创建话题</AnchorButton>
                             </div>
                         </div>
-                        <TopicList
-                            topics={topics}
-                            itemRenderer={topicItemRenderer}
-                            header={<TopicListHeader/>}
-                        />
+                        <InfiniteScroll
+                            pageStart={0}
+                            hasMore={!topics.pagination.is_last_page}
+                            loader={ <InfiniteScrollLoader key={0} /> }
+                            loadMore={this.loadMoreTopics}
+                            threshold={100}
+                        >
+                            <TopicList
+                                topics={topics}
+                                itemRenderer={topicItemRenderer}
+                                header={<TopicListHeader/>}
+                            />
+                        </InfiniteScroll>
                     </div>
                 </div>
             </div>
         );
+    }
+
+    loadMoreTopics() {
+        const { pagination } = this.props.topics;
+
+        const page_params = {
+            page: pagination.current_page + 1,
+            per_page: pagination.per_page
+        }
+
+        if (!this.state.isFetching && !pagination.is_last_page) {
+            this.setState({ isFetching: true });
+
+            const categoryId = this.props.match.params.categoryId;
+            if (categoryId) {
+                this.props.fetchTopTopicsAction({
+                    filter: {category_id: categoryId},
+                    pagination: page_params
+                }).then(json => {
+                   this.setState({ isFetching: false });
+                });
+            } else {
+                this.props.fetchTopTopicsAction({ pagination: page_params}).then(json => {
+                    this.setState({ isFetching: false });
+                });
+            }
+        }
     }
 };
 
 const mapStateToProps = (state) => ({
     currentUser: state.user.currentUser,
     notifications: state.user.notifications,
-    topics: state.topic.topics,
+    topics: state.topic.top,
     categories: state.category.categories
 })
 
@@ -89,5 +125,6 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
     fetchTopTopicsAction,
     markNotificationAction,
-    fetchAllCategories
+    fetchAllCategories,
+    cleanTopTopicsAction
 })(TopTopicContainer);

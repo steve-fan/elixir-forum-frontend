@@ -8,8 +8,11 @@ class LoginContainer extends Component {
             <div className="container flex justify-center">
                 <div className="oauth-container">
                     <div className="h4 mb2">使用第三方平台登录</div>
-                    <a href="/auth/github">
+                    <a className="block my2" href="/auth/github">
                         <Button intent="success" fill={true}>Github 登录</Button>
+                    </a>
+                    <a className="block my2" href="/auth/google">
+                        <Button intent="danger" fill={true}>Google 登录</Button>
                     </a>
                 </div>
             </div>

@@ -39,7 +39,7 @@ export const TopicListHeader = (props) => (
     <Row className="topic-list-header">
         <Col span={12}>标题</Col>
         <Col span={4}>分类</Col>
-        <Col span={4}>用户</Col>
+        <Col span={4}>活跃用户</Col>
         <Col span={1}>评论</Col>
         <Col span={1}>浏览</Col>
         <Col span={2}>活跃度</Col>
