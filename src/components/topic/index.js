@@ -50,7 +50,7 @@ export const Topic = ({topic, onSubmitReply}) => (
     <div>
         <div className="h2 pt3 pb1">{topic.title}</div>
         <div className="flex pb2">
-            <Link to={`/categories/${topic.category.slug}`}>
+            <Link to={`/categories/${topic.category.id}`}>
                 <Tag color={topic.category.background}>{topic.category.name}</Tag>
             </Link>
             { topic.tags.map(tag => <TagLink key={tag.id} {...tag} />) }
