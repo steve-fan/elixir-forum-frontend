@@ -30,7 +30,7 @@ export const topicItemRenderer = (item) => {
             </Col>
             <Col span={1} className="topic-posts-count">{item.posts_count}</Col>
             <Col span={1}>{item.views_count}</Col>
-            <Col span={2}>{Moment(item.created_at).fromNow()}</Col>
+            <Col span={2}>{Moment(item.updated_at).fromNow()}</Col>
         </Row>
     );
 }
