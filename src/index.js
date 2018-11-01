@@ -42,7 +42,6 @@ render(
                 <Route exact path="/" component={Home} />
                 <Route path="/top" component={TopTopicContainer} />
                 <LoginRequiredRoute path="/t/new" component={NewTopicContainer} />
-                <Route path="/t/:topicId/edit" component={EditTopicContainer} />
                 <Route path="/t/:topicId" component={ShowTopicContainer} />
                 <Route path="/categories/:categoryId/top" component={TopTopicContainer} />
                 <Route path="/categories/:categoryId" component={CategoryTopicContainer} />
