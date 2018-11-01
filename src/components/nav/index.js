@@ -9,12 +9,13 @@ import { MenuItem as BPMenuItem } from "@blueprintjs/core";
 import { Popover, Classes} from "@blueprintjs/core";
 import { UserAvatar} from "../../components/avatar";
 import NotificationPopover from "./notification";
+import Auth from "../../utils/auth";
 import "./style.scss";
 
 const NavbarAvatar = (props) => {
     const menu = (
         <BPMenu>
-            <BPMenuItem icon="log-out" href="/auth/logout" text="登出" />
+            <BPMenuItem icon="log-out" href="/auth/logout" onClick={Auth.unauthenticate} text="登出" />
         </BPMenu>
     );
 
@@ -50,13 +51,15 @@ class Navigation extends Component {
                                 <MenuItem className="menu-item-about">
                                     <Link to="/about">关于</Link>
                                 </MenuItem>
-
-                                <MenuItem>
-                                    <NotificationPopover
-                                        items={notificationItems}
-                                        onClickItem={this.props.onClickNotification}
-                                    />
-                                </MenuItem>
+                                { currentUser ?
+                                  <MenuItem>
+                                      <NotificationPopover
+                                          items={notificationItems}
+                                          onClickItem={this.props.onClickNotification}
+                                      />
+                                  </MenuItem> :
+                                  null
+                                }
                                 <MenuItem className="menu-item-login">
                                     { currentUser ? <NavbarAvatar {...currentUser} /> : <Link to="/login">登录</Link>}
                                 </MenuItem>

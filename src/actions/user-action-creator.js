@@ -104,7 +104,9 @@ export function fetchCurrentUser() {
     return dispatch => {
         return api.fetchCurrentUser().then(json => {
             if (json.success) {
-                dispatch(fetchCurrentUserSuccess(json.data))
+                localStorage.setItem("currentUser", JSON.stringify(json.data));
+                dispatch(fetchCurrentUserSuccess(json.data));
+                dispatch(fetchUnreadNotificationsAction());;
             }
             return json
         })

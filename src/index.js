@@ -19,6 +19,7 @@ import EditTopicContainer from "./containers/topic/edit"
 import CategoryTopicContainer from "./containers/topic/category";
 import TopTopicContainer from "./containers/topic/top";
 import LoginContainer from "./containers/login"
+import LoginRequiredRoute from "./components/common/login-required-route";
 
 import {
     fetchCurrentUser,
@@ -40,7 +41,7 @@ render(
             <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/top" component={TopTopicContainer} />
-                <Route path="/t/new" component={NewTopicContainer} />
+                <LoginRequiredRoute path="/t/new" component={NewTopicContainer} />
                 <Route path="/t/:topicId/edit" component={EditTopicContainer} />
                 <Route path="/t/:topicId" component={ShowTopicContainer} />
                 <Route path="/categories/:categoryId/top" component={TopTopicContainer} />
@@ -54,6 +55,6 @@ render(
 
 //
 store.dispatch(fetchCurrentUser());
-store.dispatch(fetchUnreadNotificationsAction());
+
 
 registerServiceWorker();
