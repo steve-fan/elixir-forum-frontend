@@ -27,6 +27,8 @@ class Post extends Component {
 
     render() {
         const {content, created_at, creator, id, parent_post, replies} = this.props.post;
+        const { currentUser } = this.props;
+
         let replyLink, repliesToggleElement, repliesElement, freshRepliesElement;
 
         if (parent_post) {
@@ -94,7 +96,7 @@ class Post extends Component {
                 {repliesElement}
                 {repliesElement ? null : freshRepliesElement}
                 {
-                    this.state.showPostReply ?
+                    (currentUser && this.state.showPostReply) ?
                     (<ReplyForm
                          post={this.props.post}
                          onSubmit={this.handleSubmitReply}

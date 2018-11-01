@@ -4,6 +4,7 @@ import Spin from "antd/lib/spin";
 import Navigation from "../../components/nav";
 import { Topic } from "../../components/topic";
 import PostForm from "../../components/post/form";
+import LoginAnchor from "../../components/common/login-anchor";
 
 import {
     fetchTopicAction,
@@ -41,7 +42,7 @@ class ShowTopicContainer extends Component {
         const { topic, currentUser, notifications } = this.props;
 
         return (
-            <div className="topic-show">
+            <div className="topic-show mb2">
                 <Navigation
                     currentUser={currentUser}
                     notifications={notifications}
@@ -49,10 +50,10 @@ class ShowTopicContainer extends Component {
                 />
                 <div className="container ep-post-container">
                     { topic ?
-                      <Topic topic={topic} onSubmitReply={this.props.createPostReplyAction} /> :
+                      <Topic topic={topic} currentUser={currentUser} onSubmitReply={this.props.createPostReplyAction} /> :
                       <Spin spinning={true}></Spin>
                     }
-                    <PostForm onSubmit={this.handleSubmitPost} />
+                    { currentUser ? <PostForm onSubmit={this.handleSubmitPost} /> : <LoginAnchor /> }
                 </div>
             </div>
         );

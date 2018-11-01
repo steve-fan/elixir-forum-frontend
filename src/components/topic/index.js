@@ -45,7 +45,7 @@ export const TopicListHeader = (props) => (
     </Row>
 )
 
-export const Topic = ({topic, onSubmitReply}) => (
+export const Topic = ({topic, currentUser, onSubmitReply}) => (
     <div>
         <div className="h2 pt3 pb1">{topic.title}</div>
         <div className="flex pb2">
@@ -56,7 +56,7 @@ export const Topic = ({topic, onSubmitReply}) => (
         </div>
         <TopicContent {...topic} />
         <div>
-            { topic.posts.map(post => <Post key={post.id} post={post} onSubmitReply={onSubmitReply} />)}
+            { topic.posts.map(post => <Post key={post.id} post={post} currentUser={currentUser} onSubmitReply={onSubmitReply} />)}
         </div>
     </div>
 )

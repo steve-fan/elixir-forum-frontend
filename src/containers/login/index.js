@@ -1,9 +1,16 @@
 import React, { Component } from "react";
 import { Button } from "@blueprintjs/core";
+import { Redirect } from "react-router-dom";
+import Auth from "../../utils/auth";
 import "./style.scss";
 
 class LoginContainer extends Component {
     render() {
+        let { from } = this.props.location.state || { from: { pathname: "/" } };
+
+        if (Auth.isAuthenticated()) {
+            return <Redirect to={from} />
+        }
         return (
             <div className="container flex justify-center">
                 <div className="oauth-container">
