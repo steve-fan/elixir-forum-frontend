@@ -7,7 +7,7 @@
 
 截图
 
-![首页](./screenshot/index.png)
-![话题](./screenshot/topic.png)
-![评论](./screenshot/post.png)
-![分类](./screenshot/category.png)
+![首页](https://github.com/steve-fan/elixir-forum-frontend/blob/master/sceenshot/index.png)
+![话题](https://github.com/steve-fan/elixir-forum-frontend/blob/master/sceenshot/topic.png)
+![评论](https://github.com/steve-fan/elixir-forum-frontend/blob/master/sceenshot/post.png)
+![分类](https://github.com/steve-fan/elixir-forum-frontend/blob/master/sceenshot/category.png)
