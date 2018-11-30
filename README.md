@@ -3,7 +3,7 @@
 参考了 Discourse 的前端设计
 后端使用 Elixir + Phoenix，支持 Google 和 Github 登录。
 
-后端代码 Repo [elixir-forum-demo-backedn!](https://github.com/steve-fan/elixir-forum-demo-backend)
+后端代码 Repo [elixir-forum-demo-backend!](https://github.com/steve-fan/elixir-forum-demo-backend)
 
 截图
 
